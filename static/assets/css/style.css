@@ -424,6 +424,10 @@ h1, h2, h3, h4, h5, h6 {
   color: #ffb03b;
 }
 
+#hero p span {
+  color: #ffb03b;
+}
+
 #hero p {
   width: 80%;
   -webkit-animation-delay: 0.4s;
