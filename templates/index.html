@@ -170,13 +170,13 @@
         </div>
 
         <div class="row menu-container filter-cooking">
-          {% for cmp in names %}
+          {% for cmp in products %}
           <div class="col-lg-6 menu-item filter-cooking">
             <div class="menu-content">
-              <a href="#">{{cmp}}</a><span>20 /-</span>
+              <a href="#">{{cmp[0]}}</a><span>{{cmp[2]}} /-</span>
             </div>
             <form action="/" name="f1"> 
-            <p class="menu-ingredients" style="margin-bottom: 0%;">80g &nbsp;&nbsp;
+            <p class="menu-ingredients" style="margin-bottom: 0%;">{{cmp[1]}} &nbsp;&nbsp;
               Quantity/Weight : <select name="quant" id="quant"><option value="1">1</option><option value="2">2</option>
                 <option value="3">3</option><option value="4">4</option><option value="5">5</option>
                 <option value="6">6</option></select>&nbsp;&nbsp;

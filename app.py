@@ -17,9 +17,13 @@ def index():
     for i in cooking_essentials.find():
         print(i['pname'])
         names.append(i['pname'])
-        #weights.append[i['pwt']]
-        #rate.append[i['prate']]
-    return render_template('index.html', names=names, weights=weights, rate=rate)
+        weights.append(i['pwt'])
+        rate.append(i['prate'])
+    products = []
+    for i in range(cooking_essentials.count()):
+        products.append([names[i], weights[i], rate[i]])
+    print(products)
+    return render_template('index.html', products=products)
 
 if __name__ == "__main__":
     print('started')
