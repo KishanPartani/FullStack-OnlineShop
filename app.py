@@ -30,7 +30,7 @@ def index():
     for i in range(cooking_essentials.count()):
         products.append([names[i], weights[i], rate[i]])
     print(products)
-    return render_template('index.html', products=products)
+    return render_template('index.html', products=products, msg='Login', urllink='login_signup')
 
 @app.route('/login_signup')
 def login():
@@ -72,9 +72,25 @@ def loginsuc():
     if(not bool(user_cred)):
         return render_template('signup.html')
     if(bcrypt.check_password_hash(user_cred['password'], pwd)):
-        return render_template('index.html', name=user_cred['name'], products=products)
+        return render_template('index.html', name=user_cred['name'], products=products, msg='Logout', urllink='logoutl')
     else:
         return render_template('signup.html')
+
+@app.route('/logoutl')
+def logout():
+    names = []
+    weights = []
+    rate = []
+    for i in cooking_essentials.find():
+        print(i['pname'])
+        names.append(i['pname'])
+        weights.append(i['pwt'])
+        rate.append(i['prate'])
+    products = []
+    for i in range(cooking_essentials.count()):
+        products.append([names[i], weights[i], rate[i]])
+    print(products)
+    return render_template('index.html', products=products, msg='Login', urllink='login_signup')
 
 if __name__ == "__main__":
     print('started')
