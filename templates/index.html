@@ -73,11 +73,11 @@
             </ul>
           </li>-->
           <li><a class="nav-link scrollto" href="#contact"><span class="fa fa-id-card fa-2x"></span></a></li>
+          <li><a class="nav-link scrollto" href="#mycart"><span class="fa fa-cart-arrow-down fa-2x"></span></a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->&nbsp;&nbsp;&nbsp;
-      <a href="#book-a-table"><i class="fa fa-cart-arrow-down fa-2x"></i></a>
-      <a href="#book-a-table" class="book-a-table-btn scrollto">Login</a>
+      <a href="/login_signup" class="book-a-table-btn scrollto">Login</a>
       
 
     </div>
@@ -93,7 +93,7 @@
         <div class="carousel-inner" role="listbox">
 
           <!-- Slide 1 -->
-          <div class="carousel-item active" style="background: url(../static/assets/img/shop1.jpeg); background-size:cover;">
+          <div class="carousel-item active" style="background: url(../static/assets/img/shop1.jpeg); background-size:cover; width: 100%;">
             <div class="carousel-container">
               <div class="carousel-content">
                 <h2 class="animate__animated animate__fadeInDown"><span>Maruti</span> Provisions</h2>
@@ -120,7 +120,7 @@
           </div>
 
           <!-- Slide 3 -->
-          <div class="carousel-item" style="background: url(../static/assets/img/slide/slide-3.jpg);">
+          <div class="carousel-item" style="background: url(../static/assets/img/slide3.png);">
             <div class="carousel-background"><img src="../static/assets/img/slide3.png" alt=""></div>
             <div class="carousel-container">
               <div class="carousel-content">
@@ -181,7 +181,8 @@
                 <option value="3">3</option><option value="4">4</option><option value="5">5</option>
                 <option value="6">6</option></select>&nbsp;&nbsp;
                 <!--<a class="subm"><i class="fa fa-cart-arrow-down fa-2x subm" style="margin-left: 50px;"></i></a>-->
-            <input type="submit" class="menu-ingredients" id="buttons" style="margin-left: 165px;" value="Add to Cart"></p> </form>
+              <input type="text" name="name" value="{{cmp[0]}}" style="height: 0px; width: 0px;">
+              <input type="submit" class="menu-ingredients" id="buttons" style="margin-left: 165px;" value="Add to Cart"></p> </form>
             </div>
             {% endfor %}
           </div><!--
@@ -366,7 +367,7 @@
     </section><!-- End Events Section -->
 
     <!-- ======= Book A Table Section ======= -->
-    <section id="book-a-table" class="book-a-table">
+    <section id="mycart" class="book-a-table">
       <div class="container">
 
         <div class="section-title">

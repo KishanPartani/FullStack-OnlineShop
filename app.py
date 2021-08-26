@@ -25,6 +25,10 @@ def index():
     print(products)
     return render_template('index.html', products=products)
 
+@app.route('/login_signup')
+def loginsignup():
+    return render_template('login-signup.html')
+
 if __name__ == "__main__":
     print('started')
     app.run(debug=True)
