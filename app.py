@@ -1,3 +1,4 @@
+from re import A
 from flask import Flask, render_template, url_for, request, flash, redirect, jsonify, send_file, session
 from flask_cors import CORS, cross_origin
 from flask_bcrypt import Bcrypt
@@ -15,13 +16,15 @@ db = client.products
 cooking_essentials = db.cooking_essentials
 db1 = client.users
 info = db1.info
-global products
+global products, cart, totalsum
+totalsum = 0
+cart = []
 products = []
 names = []
 weights = []
 rate = []
 for i in cooking_essentials.find():
-        print(i['pname'])
+        #print(i['pname'])
         names.append(i['pname'])
         weights.append(i['pwt'])
         rate.append(i['prate'])
@@ -80,14 +83,41 @@ def logout():
 
 @app.route('/addtocart', methods=['GET', 'POST'])
 def cartadd():
-    global products
+    global products, cart
     if 'name' not in session:
         return render_template('login.html')
     if request.method == 'POST':
         pname = request.form['pname']
         pquant = request.form['quant']
         print(pname, pquant)
+        cart.append([pname, pquant])
+    #print(cart)
     return render_template('index.html', name=session['name'], products=products, msg='Logout', urllink='logoutl')
+
+@app.route('/mycart')
+def mycart():
+    global cart, totalsum
+    if 'name' not in session:
+        return render_template('login.html')
+    
+    pcart = []
+    pwtcart = []
+    pratecart = []
+    pquant = []
+    pcartt = []
+    totalsum = 0
+    for i in cart:
+        prod_cred = cooking_essentials.find_one({'pname': i[0]}, {
+        'pwt': 1, 'prate': 1})
+        totalsum += int(i[1]) * int(prod_cred['prate'])
+        pcart.append(i[0])
+        pwtcart.append(prod_cred['pwt'])
+        pratecart.append(prod_cred['prate'])
+        pquant.append(i[1])
+    for i in range(len(pcart)):
+        pcartt.append([pcart[i], pwtcart[i], pratecart[i], pquant[i]])
+    print(pcartt)
+    return render_template('cart.html', name=session['name'], msg='Logout', urllink='logoutl', pcartt=pcartt, sum=totalsum)
 
 if __name__ == "__main__":
     print('started')
