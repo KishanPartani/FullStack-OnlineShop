@@ -16,9 +16,11 @@ db = client.products
 cooking_essentials = db.cooking_essentials
 db1 = client.users
 info = db1.info
-global products, cart, totalsum
+orders = db1.orders
+global products, cart, totalsum, pcartt
 totalsum = 0
 cart = []
+pcartt = []
 products = []
 names = []
 weights = []
@@ -78,6 +80,7 @@ def loginsuc():
 def logout():
     global products
     #print(products)
+    pcartt = []
     session.clear()
     return render_template('index.html', products=products, msg='Login', urllink='login_signup')
 
@@ -96,7 +99,7 @@ def cartadd():
 
 @app.route('/mycart')
 def mycart():
-    global cart, totalsum
+    global cart, totalsum, pcartt
     if 'name' not in session:
         return render_template('login.html')
     
@@ -104,7 +107,6 @@ def mycart():
     pwtcart = []
     pratecart = []
     pquant = []
-    pcartt = []
     totalsum = 0
     for i in cart:
         prod_cred = cooking_essentials.find_one({'pname': i[0]}, {
@@ -118,6 +120,22 @@ def mycart():
         pcartt.append([pcart[i], pwtcart[i], pratecart[i], pquant[i]])
     print(pcartt)
     return render_template('cart.html', name=session['name'], msg='Logout', urllink='logoutl', pcartt=pcartt, sum=totalsum)
+
+@app.route('/placeorder')
+def placeorder():
+    global pcartt,totalsum
+    if 'name' not in session:
+        return render_template('login.html')
+    user_cred = info.find_one({'name': session['name']}, {'mobn':1, 'address': 1, 'password': 1})
+    order_details = {"cust_name": session['name'],
+                    "mobn": user_cred['mobn'],
+                    "address": user_cred['address'],
+                    "order": pcartt,
+                    "total": totalsum}
+    order_id = db1.orders.insert_one(order_details).inserted_id
+    print(order_id)
+    return "Order Placed"
+
 
 if __name__ == "__main__":
     print('started')
