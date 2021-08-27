@@ -81,6 +81,9 @@ def logout():
     global products
     #print(products)
     pcartt = []
+    totalsum = 0
+    cart = []
+    pcartt = []
     session.clear()
     return render_template('index.html', products=products, msg='Login', urllink='login_signup')
 
