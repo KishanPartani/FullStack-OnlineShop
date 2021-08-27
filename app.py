@@ -15,21 +15,23 @@ db = client.products
 cooking_essentials = db.cooking_essentials
 db1 = client.users
 info = db1.info
-
-@app.route('/')
-def index():
-    names = []
-    weights = []
-    rate = []
-    for i in cooking_essentials.find():
+global products
+products = []
+names = []
+weights = []
+rate = []
+for i in cooking_essentials.find():
         print(i['pname'])
         names.append(i['pname'])
         weights.append(i['pwt'])
         rate.append(i['prate'])
-    products = []
-    for i in range(cooking_essentials.count()):
-        products.append([names[i], weights[i], rate[i]])
-    print(products)
+for i in range(cooking_essentials.count()):
+    products.append([names[i], weights[i], rate[i]])
+
+@app.route('/')
+def index():
+    global products
+    #print(products)
     return render_template('index.html', products=products, msg='Login', urllink='login_signup')
 
 @app.route('/login_signup')
@@ -49,7 +51,7 @@ def loginsignup():
                     "address": request.form['address'],
                     "password": password_hash}
     cust_id = db1.info.insert_one(user_details).inserted_id
-    print(cust_id)
+    #print(cust_id)
     return render_template('login.html')
 
 @app.route('/loggingin', methods=['GET', 'POST'])
@@ -58,39 +60,34 @@ def loginsuc():
     pwd = request.form['password']
     user_cred = info.find_one({'mobn': number}, {
         'name': 1, 'address': 1, 'password': 1})
-    names = []
-    weights = []
-    rate = []
-    for i in cooking_essentials.find():
-        print(i['pname'])
-        names.append(i['pname'])
-        weights.append(i['pwt'])
-        rate.append(i['prate'])
-    products = []
-    for i in range(cooking_essentials.count()):
-        products.append([names[i], weights[i], rate[i]])
+    global products
     if(not bool(user_cred)):
         return render_template('signup.html')
     if(bcrypt.check_password_hash(user_cred['password'], pwd)):
+        # create session variable with email
+        session['name'] = user_cred['name']
+        print(session['name'])
         return render_template('index.html', name=user_cred['name'], products=products, msg='Logout', urllink='logoutl')
     else:
         return render_template('signup.html')
 
 @app.route('/logoutl')
 def logout():
-    names = []
-    weights = []
-    rate = []
-    for i in cooking_essentials.find():
-        print(i['pname'])
-        names.append(i['pname'])
-        weights.append(i['pwt'])
-        rate.append(i['prate'])
-    products = []
-    for i in range(cooking_essentials.count()):
-        products.append([names[i], weights[i], rate[i]])
-    print(products)
+    global products
+    #print(products)
+    session.clear()
     return render_template('index.html', products=products, msg='Login', urllink='login_signup')
+
+@app.route('/addtocart', methods=['GET', 'POST'])
+def cartadd():
+    global products
+    if 'name' not in session:
+        return render_template('login.html')
+    if request.method == 'POST':
+        pname = request.form['pname']
+        pquant = request.form['quant']
+        print(pname, pquant)
+    return render_template('index.html', name=session['name'], products=products, msg='Logout', urllink='logoutl')
 
 if __name__ == "__main__":
     print('started')

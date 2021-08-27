@@ -175,13 +175,13 @@
             <div class="menu-content">
               <a href="#">{{cmp[0]}}</a><span>{{cmp[2]}} /-</span>
             </div>
-            <form action="/" name="f1"> 
+            <form action="/addtocart" name="f1" method="POST"> 
             <p class="menu-ingredients" style="margin-bottom: 0%;">{{cmp[1]}} &nbsp;&nbsp;
               Quantity/Weight : <select name="quant" id="quant"><option value="1">1</option><option value="2">2</option>
                 <option value="3">3</option><option value="4">4</option><option value="5">5</option>
                 <option value="6">6</option></select>&nbsp;&nbsp;
                 <!--<a class="subm"><i class="fa fa-cart-arrow-down fa-2x subm" style="margin-left: 50px;"></i></a>-->
-              <input type="text" name="name" value="{{cmp[0]}}" style="height: 0px; width: 0px;">
+              <input type="text" name="pname" value="{{cmp[0]}}" style="height: 0px; width: 0px;">
               <input type="submit" class="menu-ingredients" id="buttons" style="margin-left: 165px;" value="Add to Cart"></p> </form>
             </div>
             {% endfor %}
