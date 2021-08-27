@@ -137,7 +137,7 @@ def placeorder():
                     "total": totalsum}
     order_id = db1.orders.insert_one(order_details).inserted_id
     print(order_id)
-    return "Order Placed"
+    return render_template('success.html')
 
 
 if __name__ == "__main__":
