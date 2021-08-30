@@ -36,6 +36,17 @@ for i in range(cooking_essentials.count()):
 @app.route('/')
 def index():
     global products
+    names = []
+    weights = []
+    rate = []
+    for i in cooking_essentials.find():
+            #print(i['pname'])
+            names.append(i['pname'])
+            weights.append(i['pwt'])
+            rate.append(i['prate'])
+    for i in range(cooking_essentials.count()):
+        products.append([names[i], weights[i], rate[i]])
+
     #print(products)
     return render_template('index.html', products=products, msg='Login', urllink='login_signup')
 
