@@ -22,16 +22,6 @@ totalsum = 0
 cart = []
 pcartt = []
 products = []
-names = []
-weights = []
-rate = []
-for i in cooking_essentials.find():
-        #print(i['pname'])
-        names.append(i['pname'])
-        weights.append(i['pwt'])
-        rate.append(i['prate'])
-for i in range(cooking_essentials.count()):
-    products.append([names[i], weights[i], rate[i]])
 
 @app.route('/')
 def index():
@@ -149,6 +139,21 @@ def placeorder():
     order_id = db1.orders.insert_one(order_details).inserted_id
     print(order_id)
     return render_template('success.html')
+
+@app.route('/myorders')
+def myorders():
+    global products
+    if 'name' not in session:
+        return render_template('login.html')
+    my_order_db = []
+    cost = 0
+    #for i in orders.find_one({'cust_name': session['name']}, {'mobn':1, 'address': 1, 'order': 1, 'total': 1}):
+    for i in orders.find():
+        if i['cust_name'] == session['name']:
+            my_order_db.append(i['order'])
+            cost += int(i['total'])
+    return render_template('index.html', products=products, msg='Logout', urllink='logoutl', orders=my_order_db, cost=cost, name=session['name'])
+
 
 
 if __name__ == "__main__":

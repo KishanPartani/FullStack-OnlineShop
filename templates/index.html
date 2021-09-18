@@ -53,7 +53,7 @@
         <ul>
           <li><a class="nav-link scrollto" href="#hero"><span class="fa fa-home fa-2x"></span></a></li>
           <li><a class="nav-link scrollto" href="#menu"><span class="fa fa-list-ul fa-2x"></span></a></li>
-          <li><a class="nav-link scrollto" href="#specials"><span class="fa fa-gift fa-2x"></span></a></li>
+          <li><a class="nav-link scrollto" href="/myorders"><span class="fa fa-inbox fa-2x"></span></a></li>
           <li><a class="nav-link scrollto" href="#gallery"><span class="fa fa-image fa-2x"></span></a></li>
           <!--<li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
@@ -283,49 +283,21 @@
       <div class="container">
 
         <div class="section-title">
-          <h2>Your <span>Cart</span></h2>
-          <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
+          <h2>Your <span>Orders</span></h2>
         </div>
-
-        <form method="post" role="form" class="email-form">
-          <div class="row">
-            <div class="col-lg-4 col-md-6 form-group">
-              <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-              <div class="validate"></div>
+        <div class="row menu-container filter-cooking" style="padding-left: 100px;">
+          {% for cmp in orders %}
+          <div class="col-lg-6 menu-item filter-cooking">
+            <div class="menu-content">
+              {% for j in cmp %}
+                  <a href="#">{{j[0]}}</a> &nbsp;x <span>{{j[3]}}</span>&nbsp;
+              {% endfor %}
             </div>
-            <div class="col-lg-4 col-md-6 form-group mt-3 mt-md-0">
-              <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email">
-              <div class="validate"></div>
+            <br>
             </div>
-            <div class="col-lg-4 col-md-6 form-group mt-3 mt-md-0">
-              <input type="text" class="form-control" name="phone" id="phone" placeholder="Your Phone" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-              <div class="validate"></div>
-            </div>
-            <div class="col-lg-4 col-md-6 form-group mt-3">
-              <input type="text" name="date" class="form-control" id="date" placeholder="Date" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-              <div class="validate"></div>
-            </div>
-            <div class="col-lg-4 col-md-6 form-group mt-3">
-              <input type="text" class="form-control" name="time" id="time" placeholder="Time" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-              <div class="validate"></div>
-            </div>
-            <div class="col-lg-4 col-md-6 form-group mt-3">
-              <input type="number" class="form-control" name="people" id="people" placeholder="# of people" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
-              <div class="validate"></div>
-            </div>
+            {% endfor %}
           </div>
-          <div class="form-group mt-3">
-            <textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea>
-            <div class="validate"></div>
-          </div>
-          <div class="mb-3">
-            <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message">Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!</div>
-          </div>
-          <div class="text-center"><button type="submit">Send Message</button></div>
-        </form>
-
+          <h1 style="text-align: center; margin-top: 50px;">Total amount spent till now : {{cost}}</h1>
       </div>
     </section><!-- End Book A Table Section -->
 
